@@ -12,8 +12,12 @@ class MainWidget(Widget):
     #line = None
 
     V_NB_LINES = 10
-    V_LINES_SPACING = 0.25  #Percentage in screen width
+    V_LINES_SPACING = 0.1  #Percentage in screen width
     vertical_lines = []
+
+    H_NB_LINES = 15
+    H_LINES_SPACING = 0.2  # Percentage in screen Height
+    horizontal_lines = []
 
 
     def __init__(self, **kwargs):
@@ -21,6 +25,7 @@ class MainWidget(Widget):
         #super().__init__(self, **kwargs)
         #print(" INIT W " + str(self.width) + " H " + str(self.height))
         self.init_vertical_lines()
+        self.init_horizontal_lines()
 
 
     def on_parent(self, widget, parent):
@@ -33,6 +38,7 @@ class MainWidget(Widget):
         #self.perspective_point_x = self.width/2
         #self.perspective_point_y = self.height * 0.75
         self.update_vertical_lines()
+        self.update_horizontal_lines()
 
 
     def on_perspective_point_x(self, widget, value):
@@ -70,6 +76,29 @@ class MainWidget(Widget):
             #self.vertical_lines[i].points = [line_x, 0, line_x, self.height]
             self.vertical_lines[i].points = [x1, y1, x2, y2]
             offset += 1
+
+
+    def init_horizontal_lines(self):
+        with self.canvas:
+            Color(1, 1, 1)
+            for i in range(0, self.H_NB_LINES):
+                self.horizontal_lines.append(Line())
+
+    def update_horizontal_lines(self):
+
+        center_line_x = int(self.width / 2)
+        spacing = self.V_LINES_SPACING * self.width
+        offset = int(self.V_NB_LINES / 2) - 0.5  # to center the space
+
+        xmin = center_line_x - offset * spacing
+        xmax = center_line_x + offset * spacing
+        spacing_y = self.H_LINES_SPACING * self.height
+
+        for i in range(0, self.H_NB_LINES):
+            line_y = i * spacing_y
+            x1, y1 = self.transform(xmin, line_y)
+            x2, y2 = self.transform(xmax, line_y)
+            self.horizontal_lines[i].points = [x1, y1, x2, y2]
 
 
     def transform(self, x, y):
