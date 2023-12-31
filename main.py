@@ -11,8 +11,8 @@ class MainWidget(Widget):
 
     #line = None
 
-    V_NB_LINES = 7
-    V_LINES_SPACING = 0.1  #Percentage in screen width
+    V_NB_LINES = 10
+    V_LINES_SPACING = 0.25  #Percentage in screen width
     vertical_lines = []
 
 
@@ -58,7 +58,8 @@ class MainWidget(Widget):
 
         center_line_x = int(self.width / 2)
         spacing = self.V_LINES_SPACING * self.width
-        offset = -int(self.V_NB_LINES/2)
+        #offset = -int(self.V_NB_LINES/2)
+        offset = -int(self.V_NB_LINES / 2) + 0.5     # to center the space
 
         for i in range(0, self.V_NB_LINES):
             line_x = int(center_line_x + offset * spacing)
