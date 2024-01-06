@@ -136,9 +136,12 @@ class MainWidget(Widget):
 
     def update (self, dt):
         # print("Update")
+        #print("dt:" + str(dt) + " - 1/60: " + str(1.0/60.0))
+       #print("dt:" + str(dt*60))
+        time_factor = dt*60
         self.update_vertical_lines()
         self.update_horizontal_lines()
-        self.current_offset_y += self.speed
+        self.current_offset_y += self.speed * time_factor
 
         spacing_y = self.H_LINES_SPACING * self.height
 
