@@ -1,7 +1,11 @@
 
 from kivy.config import Config
+
+
 Config.set('graphics', 'width', '900')
 Config.set('graphics', 'height', '400')
+
+from kivy.core.audio import SoundLoader
 import random
 from kivy import platform
 from kivy.core.window import Window
@@ -46,11 +50,17 @@ class MainWidget(Widget):
     SHIP_BASE_Y = 0.04
     ship = None
 
-
+    sound_begin = None
+    sound_galaxy = None
+    sound_gameover_impact = None
+    sound_gameover_voice = None
+    sound_music1 = None
+    sound_restart = None
     def __init__(self, **kwargs):
         super(MainWidget, self).__init__(**kwargs)
         #super().__init__(self, **kwargs)
         #print(" INIT W " + str(self.width) + " H " + str(self.height))
+        self.init_audio()
         self.init_vertical_lines()
         self.init_horizontal_lines()
         self.init_tiles()
@@ -63,7 +73,28 @@ class MainWidget(Widget):
             self._keyboard.bind(on_key_down=self.on_keyboard_down)
             self._keyboard.bind(on_key_up=self.on_keyboard_up)
 
+
         Clock.schedule_interval(self.update, 1.0/60.0)
+
+        self.sound_music1.play()
+
+
+    def init_audio(self):
+        self.sound_begin = SoundLoader.load("audio/begin.wav")
+        self.sound_galaxy = SoundLoader.load("audio/galaxy.wav")
+        self.sound_gameover_impact = SoundLoader.load("audio/gameover_impact.wav")
+        self.sound_gameover_voice = SoundLoader.load("audio/gameover_voice.wav")
+        self.sound_music1 = SoundLoader.load("audio/music1.wav")
+        self.sound_restart = SoundLoader.load("audio/restart.wav")
+
+        self.sound_music1.volume = 1
+        self.sound_begin.volume = 0.25
+        self.sound_galaxy.volume = 0.25
+        self.sound_gameover_impact.volume = 0.6
+        self.sound_gameover_voice.volume = 0.25
+        self.sound_restart.volume = 0.25
+
+
 
     def is_desktop(self):
         if platform in ("linux", "win", "macosx"):
