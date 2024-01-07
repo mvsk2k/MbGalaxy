@@ -26,7 +26,7 @@ class MainWidget(Widget):
 
     current_offset_y = 0
 
-    SPEED_X = 3
+    SPEED_X = 12
     current_speed_x = 0
     current_offset_x = 0
 
@@ -144,12 +144,15 @@ class MainWidget(Widget):
     def on_touch_down(self, touch):
         if touch.x < self.width/2:
             print ('<-')
+            self.current_speed_x = self.SPEED_X
         else:
             print('->')
+            self.current_speed_x = -self.SPEED_X
 
 
     def on_touch_up(self, touch):
         print('up')
+        self.current_speed_x = 0
 
 
 
