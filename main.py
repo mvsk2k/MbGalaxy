@@ -27,6 +27,7 @@ class MainWidget(Widget):
     current_offset_y = 0
 
     SPEED_X = 3
+    current_speed_x = 0
     current_offset_x = 0
 
 
@@ -140,6 +141,18 @@ class MainWidget(Widget):
 
         return int(tr_x), int(tr_y)
 
+    def on_touch_down(self, touch):
+        if touch.x < self.width/2:
+            print ('<-')
+        else:
+            print('->')
+
+
+    def on_touch_up(self, touch):
+        print('up')
+
+
+
 
     def update (self, dt):
         # print("Update")
@@ -155,7 +168,7 @@ class MainWidget(Widget):
         if self.current_offset_y >= spacing_y:
             self.current_offset_y -= spacing_y
 
-        self.current_offset_x += self.SPEED_X * time_factor
+        self.current_offset_x += self.current_speed_x * time_factor
 
 
 
